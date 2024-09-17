@@ -7,12 +7,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private float speed =5.0f;
+    private float jumpForce = 3.0f;
 
     [SerializeField]
-    private float jumpForce = 5.0f;
-
-
-    //näppäinmuuutujat
     public KeyCode jump;
 
     private Rigidbody2D rb2d;
@@ -31,14 +28,16 @@ public class PlayerController : MonoBehaviour
     public void MovePlayer()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+       // float verticalInput = Input.GetAxis("Vertical");
 
-        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+        Vector3 direction = new Vector3(horizontalInput, 0);
+        
 
-        transform.Translate(direction * speed * Time.deltaTime);
+        rb2d.velocity = new Vector2(horizontalInput * speed, rb2d.velocity.y);
+        //transform.Translate(direction * speed * Time.deltaTime);
 
 
-        if (Input.GetKeyDown(jump))
+        if (Input.GetKey(jump))
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
         }
